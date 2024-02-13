@@ -1,0 +1,125 @@
+{% include "header.html" %}
+
+<div class="container-fluid row mt-4 px-0 justify-content-end">
+    <div class="col-lg-1 col-md-1"></div>
+    <div class="col col-lg-6 col-sm-11">
+        <div class="row">
+            <div class="col col-sm-11"><h1 class="green">{{sermon.title}}</h1></div>
+            <div class="col col-sm-1">
+                {% if not_saved==2 %}
+                <a href="{{url_for('save',id=sermon.id)}}">
+                    <button class="btn btn-outline-secondary" type="button">Save</button>
+                </a>
+                {% else %}
+                <a href="{{url_for('unsave',id=sermon.id)}}">
+                    <button class="btn btn-outline-secondary" type="button">Saved</button>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <p class="green">{{ body| safe}}</p>
+        <p class="green">By {{sermon.author}}</p>
+        <p class="green">On {{sermon.date}}</p>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-0"></div>
+
+    <div class="col col-lg-3 col-sm-12 ms-5">
+        <div class="row">
+            <!-- Example single danger button -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger dropdown-toggle back-gold" data-bs-toggle="dropdown" aria-expanded="false"
+                      style="border-color: #FFFFEC">
+                Action
+              </button>
+              <ul class="dropdown-menu">
+                  {% if num != 1 %}
+                <li><a class="dropdown-item" href="{{url_for('sermons',num= num-1)}}">Back</a></li>
+                  {% endif %}
+                  {% if num < len %}
+                <li><a class="dropdown-item" href="{{url_for('sermons',num= num+1)}}">Next</a></li>
+                  {% endif %}
+                <li><a class="dropdown-item" href="{{url_for('edit',id=sermon.id)}}">Edit</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item"  href="{{url_for('new',id=sermon.id)}}">New</a></li>
+              </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-1 col-md-0"></div>
+            <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;"><!-- change width to use col-sm-12 -->
+                <h2 class="pt-5 green">Sermons</h2> <!--Add a button to go to saved sermons-->
+                <div class="list-group list-group-flush border-bottom scrollarea">
+                    <a href="#" class="list-group-item list-group-item-action active py-3 lh-sm" aria-current="true"
+                    style="background-color: #F1E4C3; border-bottom: 4px #C6A969 solid">
+                <div class="d-flex w-100 align-items-center justify-content-between">
+                  <strong class="mb-1 green">{{sermon.title}}</strong>
+                  <small>{{sermon.date}}</small>
+                </div>
+                <div class="col-10 mb-1 small green">Enjoy the sermon.</div>
+              </a>
+            {% for s in sermons %}
+              <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" style="
+              background-color: #FFFFEC; ">
+                <div class="d-flex w-100 align-items-center justify-content-between">
+                  <strong class="mb-1 green">{{s.title}}</strong>
+                  <small class="text-body-secondary">{{s.date}}</small>
+                </div>
+                <a class="col-10 mb-1 small green" href="{{url_for('sermons', num=s.id)}}" style="
+                background-color: #FFFFEC; border-bottom: 4px #F1E4C3 solid;
+                           width: 100%">Click here to see another message God has for you.</a>
+              </a>
+                {% endfor %}
+
+            </div>
+            </div>
+            </div>
+    </div>
+
+    </div>
+<div class="row mt-5">
+    <div class="col col-lg-1 col-sm-1"></div>
+    <div class="col"><h2 class="green">Comments</h2></div>
+
+</div>
+
+<div class="row">
+    <div class="row">
+        <div class="col col-md-1 col-sm-1"></div>
+        <div class="col col-md-6">
+            <label class="fs-4 green">New Comment</label>
+            <form method="post" action="{{url_for('sermons', num=num)}}">
+                <input class="form-control" name="comment" style="height: 8vw">
+                {% if current_user.is_authenticated %}
+                <button class="btn btn-success mt-2 px-5" type="submit" style="background-color: #C6A969;
+                    border-color: #FFFFEC">Post</button>
+                {% endif %}
+            </form>
+        </div>
+
+
+    </div>
+   <div class="row">
+       <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-left">
+          <div class="col col-sm-1"></div>
+      <div class="list-group">
+          {% for comment in comments %}
+        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+          <img src="{{comment.comment_author.img_url}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+          <div class="d-flex gap-2 w-100 justify-content-between">
+            <div>
+              <h6 class="mb-0">{{ comment.comment_author.name }}</h6>
+              <p class="mb-0 opacity-75">{{ comment.text }}</p>
+            </div>
+            <small class="opacity-50 text-nowrap"></small>
+          </div>
+        </a>
+          {% endfor %}
+
+        </div>
+       </div>
+   </div>
+
+</div>
+
+{% include "footer.html" %}

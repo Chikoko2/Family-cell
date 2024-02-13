@@ -1,0 +1,162 @@
+{% include "header.html" %}
+<main>
+
+  <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="active" aria-current="true"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="65vh" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#597E52" />
+                <stop offset="70%" stop-color="#C6A969" />
+                <stop offset="100%" stop-color="#C6A969" />
+            </linearGradient>
+            </defs>
+          <rect width="100%" height="100%" class="gradient-background" fill="url(#gradient)"></rect>
+        </svg>
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>We Have Sermons</h1>
+            <p class="opacity-75">Messages God has for you. These contributions are from our users.</p>
+            <p><a class="btn back-yellow btn-lg btn-primary border-0 text-black" href="{{url_for('sermons', num=1)}}"
+            >Read now</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="65vh" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+         <defs>
+            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#C6A969" />
+                <stop offset="70%" stop-color="#F1E4C3" />
+                <stop offset="100%" stop-color="#F1E4C3" />
+            </linearGradient>
+         </defs>
+          <rect width="100%" height="100%" class="gradient-background" fill="url(#gradient1)"></rect>
+        </svg>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Prayer Requests and Testimonies.</h1>
+            <p>Here as some of the prayers that have been answered and those we want to answer.</p>
+            <p><a class="btn btn-lg btn-primary border-0 back-green" href="{{url_for('prayer', id=1)}}"
+            >View</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item active">
+        <svg class="bd-placeholder-img" width="100%" height="65vh" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <defs>
+              <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="20%" stop-color="#F1E4C3"/>
+                  <stop offset="70%" stop-color="#597E52" />
+                  <stop offset="100%" stop-color="#597E52" />
+              </linearGradient>
+           </defs>
+          <rect width="100%" height="100%" fill="url(#gradient2)"></rect>
+        </svg>
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>Any Contributions?</h1>
+            <p>Any site visitor can contribute to our bank of sermons.</p>
+            <p><a class="btn btn-lg btn-primary border-0 back-gold" href="{{url_for('new')}}"
+            >Post Sermon</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+  <!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">A Christian Centered Website <span class="text-body-secondary"></span></h2>
+        <p class="lead">All sermons are Christian. Please do not contribute AOB in sermons or comments.</p>
+      </div>
+      <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"
+        ><title>Placeholder</title>
+            <defs>
+            <pattern id="imagePattern" x="0" y="0" width="100%" height="100%">
+                <image xlink:href="../static/images/cross.jpg" x="0" y="0" width="100%" height="100%" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#imagePattern)"></rect><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em"></text></svg>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1">High Quality website.<span class="text-body-secondary"> Set for easy use.</span></h2>
+        <p class="lead">We use quick login on all pages that need user identification. Its also interactive and allows for feedback on posts.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <title>Placeholder</title>
+          <defs>
+            <pattern id="imagePattern1" x="0" y="0" width="100%" height="100%">
+                <image xlink:href="../static/images/nature.jpg" x="0" y="0" width="100%" height="100%"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#imagePattern1)"></rect><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em"></text></svg>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">We aim to connect one another. <span class="text-body-secondary"></span></h2>
+        <p class="lead">We hope to facilitate group based prayer sessions. And to allow members to support each other in our journeys of faith despite the physical distances between us.</p>
+      </div>
+      <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <title>Placeholder</title>
+          <defs>
+            <pattern id="imagePattern2" x="0" y="0" width="100%" height="100%">
+                <image xlink:href="../static/images/nasa.jpg" x="0" y="0" width="100%" height="100%" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#imagePattern2)"></rect><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em"></text></svg>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+
+
+  <!-- FOOTER -->
+
+</main>
+{% include "footer.html" %}

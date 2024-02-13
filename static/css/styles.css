@@ -1,0 +1,95 @@
+body { width: 100%
+}
+header { height: 100%}
+
+.select-button {background-color: #C6A969;
+    color: white
+}
+.yellow {   background-color: #FFFFEC;
+            background-position: center;
+
+            width: 100%}
+
+.green { color: #597E52
+        }
+
+#home { background-color: #C6A969;
+}
+.header-button { color: #597E52
+}
+
+.move-buttons { width: 100%
+}
+
+.form-label {
+    color: #597E52;
+    font-size: 23px
+}
+
+#submit {background-color: #597E52;
+    color: white;
+    border-color: #FFFFEC
+}
+.gold { color: #C6A969;
+}
+
+.add-field { background-color: #F1E4C3;
+            color: #597E52;
+}
+
+.form-control { margin-bottom: 10px
+}
+
+.dropdown-item { width: 100%;
+                color: #597E52}
+
+.dropdown-menu { width: 90%
+}
+
+.gradient-background {
+  animation: gradient-animation 18s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.h:hover { color: #C6A969
+}
+
+.full-width { width: 100vw
+}
+
+#dashboard {    border-bottom: 10px #C6A969 solid
+}
+
+.back-gold {  background-color: #C6A969
+}
+
+.back-green {background-color: #597E52
+}
+
+.back-yellow {background-color: #F1E4C3}
+
+.current-user {color: #597E52;
+                   border: 1px solid #597E52
+}
+
+.no-margin { margin-right:0
+}
+
+.other-users { background-color: #597E52;
+                font-weight: 100;
+                font-size: 16px
+}
+
+
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Family Alter</title>
+    {% block styles %}
+    <!-- Load Bootstrap-Flask CSS here -->
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="../static/css/styles.css">
+   {% endblock %}
+    <script>
+        function addField() {
+            var container = document.getElementById('dynamic-fields-container');
+            var field = document.createElement('div');
+            field.innerHTML = '<input class="form-control" type="text" name="dynamic_fields">'; // Customize the input field as needed
+            container.appendChild(field);
+        }
+        function addFields() {
+            var container = document.getElementById('dynamic-fields-containers');
+            var field = document.createElement('div');
+            field.innerHTML = '<input class="form-control" type="text" name="dynamic_field">'; // Customize the input field as needed
+            container.appendChild(field);
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid yellow" id="dashboard">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-1 ">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span style="color: #597E52; padding-right:20px; font-size: 50px"
+        >FAMILY DASHBOARD</span>
+      </a>
+
+      <ul class="nav nav-pills d-flex align-items-center">
+        <li class="nav-item back-gold"><a href="{{url_for('home')}}" id="home" class="nav-link active fw-bold back-gold" aria-current="page"
+        >Home</a></li>
+        <li class="nav-item"><a href="{{url_for('personal', id=1)}}" class="nav-link header-button fw-bold h" >Personal</a></li>
+        <li class="nav-item"><a href="{{url_for('about')}}" class="nav-link header-button fw-bold h" >About</a></li>
+      </ul>
+
+    </header>
+        {% if x==1 %}
+        <div class="container-fluid d-flex gap-2 justify-content-center py-0">
+            {% for user in guys %}
+                {% if user.id == current_user.id %}
+                <a class="no-margin" href="{{url_for('login',id=user.id)}}">
+                <h3><span class="badge current-user bg-success-subtle rounded-pill px-sm-2 px-lg-4"
+                >{{user.name}}</span></h3></a>
+                {% else %}
+                <a class="no-margin" href="{{url_for('login',id=user.id)}}">
+                <h3><span class="badge rounded-pill px-sm-2 px-lg-4 other-users" >
+                    {{ user.name }}</span></h3></a>
+                {% endif %}
+                {% endfor %}
+        </div>
+        {% endif %}
+
+  </div>
