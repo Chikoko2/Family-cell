@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, DeclarativeBase
 from sqlalchemy import desc, Integer, String, Text, ForeignKey,Column
 # Import your forms from the forms.py
-from forms import SermonForm, PrayerForm
+from forms import SermonForm, PrayerForm, Userform
 import requests
 import os
 
@@ -108,7 +108,7 @@ def sermons(num):
             not_saved = 2
     else:
         not_saved = 2
-    sermons = db.session.query(Sermon).order_by(desc(Sermon.date)).all()
+    sermons = db.session.query(Sermon).filter(Sermon.id != num).order_by(desc(Sermon.date)).all()
     users = db.session.query(User).all()
     comments = db.session.query(Comment).filter_by(sermon_id=num).order_by(Comment.id.desc()).all()
 
@@ -339,6 +339,19 @@ def personal(id):
             subtext.append(p_list[1])
 
     return render_template('personal.html', saved=saved, x=1, guys=users, subtext=subtext, len=length)
+
+@app.route('/user', methods=['POST','GET'])
+def user():
+    form = Userform()
+    if form.validate_on_submit():
+        new = User(
+             name= form.name.data,
+            img_url=form.img_url.data
+        )
+        db.session.add(new)
+        db.session.commit()
+        return redirect(url_for('user'))
+    return render_template('user.html', form=form)
 
 if __name__ == "__main__":
     app.run(debug=False)

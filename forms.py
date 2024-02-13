@@ -15,5 +15,11 @@ class PrayerForm(FlaskForm):
     testimonies = FieldList(StringField("Testimonies"), min_entries=1, max_entries=6)
     submit = SubmitField("Post")
 
+class Userform(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    img_url = StringField("Image", validators=[DataRequired()])
+
+
+
 
 
