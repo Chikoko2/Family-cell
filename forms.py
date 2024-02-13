@@ -18,7 +18,7 @@ class PrayerForm(FlaskForm):
 class Userform(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     img_url = StringField("Image", validators=[DataRequired()])
-
+    submit = SubmitField("Post")
 
 
 
