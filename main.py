@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, abort, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user, login_required
@@ -9,10 +9,12 @@ from sqlalchemy import desc, Integer, String, Text, ForeignKey,Column
 # Import your forms from the forms.py
 from forms import SermonForm, PrayerForm
 import requests
+import os
+
 
 api_url = "https://bible-api.com/"
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'H8U8g8hUI8987Y99hbinoo'
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 Bootstrap5(app)
 ckeditor = CKEditor(app)
 
@@ -339,4 +341,4 @@ def personal(id):
     return render_template('personal.html', saved=saved, x=1, guys=users, subtext=subtext, len=length)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=False)
