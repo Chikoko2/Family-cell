@@ -92,4 +92,11 @@ header { height: 100%}
 }
 
 
+ @media (max-width: 600px) {
+    p {font-size: 22px; }
+    #dashboard {height: 16vh}
+    h2 { font-size: 32px }
+    myCarousel { height: 50hv}
+  }
+
 
