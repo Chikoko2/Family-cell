@@ -238,8 +238,8 @@ def prayer(id):
                 db.session.add(first)
                 db.session.commit()
             for i in range(len(list_of_requests),len(list_of_testimonies)):
-                second = Testimony(testimony=None,
-                          request=list_of_requests[i],
+                second = Testimony(testimony=list_of_testimonies[i],
+                          request=None,
                           date=current_date.strftime('%d/%m/%y'),
                           author=current_user
                           )
