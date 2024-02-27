@@ -344,5 +344,5 @@ def personal(id):
     return render_template('personal.html', saved=saved, x=1, guys=users, subtext=subtext, len=length)
 
 if __name__ == "__main__":
-    #app.run(debug=False)
-    app.run(debug=True)
+    app.run(debug=False)
+    #app.run(debug=True)
