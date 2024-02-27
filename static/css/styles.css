@@ -91,12 +91,29 @@ header { height: 100%}
                 font-size: 16px
 }
 
+#ss {margin-left: 0}
+#ex {width: 10px}
+#requiem {width: 90%}
+#personal {margin-left: 10vw}
 
  @media (max-width: 600px) {
-    p {font-size: 22px; }
-    #dashboard {height: 16vh}
+    p {font-size: 14px; }
+    #ss {width: 90vw}
+    #fam {font-size: 29px }
+    #dashboard {height: 30vh; font-weight: 500}
     h2 { font-size: 32px }
     myCarousel { height: 50hv}
-  }
+    .other-users {font-size: 13px}
+    #current {font-size: 20px}
+    .full { width: 50vw}
+    .form-control { width: 90%}
+    #pray {width: 95%}
+    #ex {width: 10px}
+    #requeim {width: 60%;
+    padding: 0}
+    .card {margin-left: 20px}
 
+}
 
+@media (min-width: 610px) {
+    #fam {font-size: 50px;}
