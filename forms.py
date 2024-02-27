@@ -5,8 +5,7 @@ from flask_ckeditor import CKEditorField
 
 class SermonForm(FlaskForm):
     title = StringField("Sermon Title", validators=[DataRequired()])
-    body = CKEditorField("Please provide a summary.\n   (single-verse:/*/genesis1:2/*/, multiple-verses:/*/1peter+3:1-4/*/)\nWrong format will cause errors.Just go back incase this happens."
-                         "You may choose not to use this format, if so don't use these symbols /*/ in that order.", validators=[DataRequired()])
+    body = CKEditorField("Please provide a summary.", validators=[DataRequired()])
     author = StringField("Author", validators=[DataRequired()])
     submit = SubmitField("Post Sermon")
 
