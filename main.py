@@ -14,8 +14,8 @@ import os
 
 api_url = "https://bible-api.com/"
 app = Flask(__name__)
-#app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
-app.config['SECRET_KEY'] = "cnfkkc"
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
+#app.config['SECRET_KEY'] = "cnfkkc"
 Bootstrap5(app)
 ckeditor = CKEditor(app)
 
@@ -38,8 +38,8 @@ def not_in(input, num):
 class Base(DeclarativeBase):
     pass
 
-#app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get("DB_URI",'sqlite:///family-cell.db')#"sqlite:///family-cell.db"
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///family-cell.db"
+app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get("DB_URI",'sqlite:///family-cell.db')#"sqlite:///family-cell.db"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///family-cell.db"
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
