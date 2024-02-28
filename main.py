@@ -12,20 +12,27 @@ import requests
 import os
 import re
 
-bible_books = [
-    "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
-    "Joshua", "Judges", "Ruth", "1Samuel", "2Samuel", "Kings",
-    "2Kings", "1Chronicles", "2Chronicles", "Ezra", "Nehemiah",
-    "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon",
-    "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea",
-    "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk",
-    "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark",
-    "Luke", "John", "Acts", "Romans", "1Corinthians", "2Corinthians",
-    "Galatians", "Ephesians", "Philippians", "Colossians", "Thessalonians",
-    "2 Thessalonians", "Timothy", "2 Timothy", "Titus", "Philemon",
-    "Hebrews", "James", "1Peter", "2Peter", "1John", "2John",
-    "3John", "Jude", "Revelation"
-]
+
+
+bible_books =[
+            'genesis', 'exodus', 'leviticus', 'numbers', 'deuteronomy', 'joshua', 'judges', 'ruth', 'samuel',
+              '1samuel', '2samuel', 'kings', '1kings', '2kings', 'chronicles', '1chronicles', '2chronicles', 'ezra',
+              'nehemiah', 'esther', 'job', 'psalms', 'psalm', 'proverbs', 'ecclesiastes', 'song of solomon', 'isaiah',
+              'jeremiah', 'lamentations', 'ezekiel', 'daniel', 'hosea', 'joel', 'amos', 'obadiah', 'jonah', 'micah',
+              'nahum', 'habakkuk', 'zephaniah', 'haggai', 'zechariah', 'malachi', 'matthew', 'mark', 'luke', 'john',
+              'acts', 'romans', 'corinthians', '1corinthians', '2corinthians', 'galatians', 'ephesians', 'philippians',
+              'colossians', 'thessalonians', '2thessalonians', '1thessalonians', 'thessalonians', 'timothy', '1timothy',
+              '2timothy', 'titus', 'philemon', 'hebrews', 'james', 'peter', '1peter', '2peter', '1john', '2john',
+              '3john', 'jude', 'revelation','1sam', '2sam', '1kings', '2kings', '1chron', '2chron', '1thess',
+                '2thess', '1tim', '2tim', '1pet', '2pet', 'gen', 'exod', 'lev', 'num', 'deut', 'josh', 'judg', 'ruth',
+                'neh', 'esth', 'job', 'ps', 'prov', 'eccl', 'song', 'isa', 'jer', 'lam', 'ezek', 'dan', 'hos', 'joel',
+                'amos', 'obad', 'jonah', 'mic', 'nah', 'hab', 'zeph', 'hag', 'zech', 'mal', 'matt', 'mark', 'rom',
+                'gal', 'eph', 'phil', 'col', 'titus', 'philem', 'heb', 'james', 'rev'
+              ]
+
+numbered_books = ['samuel', 'kings', 'corinthians', 'thessalonians', 'timothy', 'peter', 'john',
+                    'sam', 'kings', 'chron', 'thess', 'tim', 'pet'
+                  ]
 
 api_url = "https://bible-api.com/"
 app = Flask(__name__)
@@ -138,11 +145,18 @@ def sermons(num):
     books = []
 
     for i in range(len(words)):
-        if words[i].capitalize() in bible_books:
+        if words[i].lower() in bible_books:
             books.append(i)
     print(books)
     if books:
         for num in books:
+            if words[num].lower() in numbered_books:
+                try:
+                    state = int(words[num - 2])
+                    words[num] = f"{state}{words[num]}"
+                    words[num - 2] = ""
+                except:
+                    pass
             if ':' in list(words[num + 2]):
                 book = words[num].lower()
                 verse = words[num + 2]
@@ -153,13 +167,16 @@ def sermons(num):
                 print(search)
                 response = requests.get(api_url + search)
                 data = response.json()
+
                 print(data)
-                words[num] = f'''
-                <button type="button" data-popover class="btn" data-bs-toggle="popover" 
-                title="{data["text"]}" 
-                data-content="{verse}">
-                {data["reference"]}</button>'''
-                words[num + 2] = ""
+
+                if 'error' not in data:
+                    words[num] = f'''
+                    <button type="button" data-popover class="btn" data-bs-toggle="popover" 
+                    title="{data["text"]}" 
+                    data-content="{verse}">
+                    {data["reference"]}</button>'''
+                    words[num + 2] = ""
 
         body = ''.join(words)
 
