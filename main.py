@@ -10,7 +10,22 @@ from sqlalchemy import desc, Integer, String, Text, ForeignKey,Column
 from forms import SermonForm, PrayerForm
 import requests
 import os
+import re
 
+bible_books = [
+    "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
+    "Joshua", "Judges", "Ruth", "1Samuel", "2Samuel", "Kings",
+    "2Kings", "1Chronicles", "2Chronicles", "Ezra", "Nehemiah",
+    "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon",
+    "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea",
+    "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk",
+    "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark",
+    "Luke", "John", "Acts", "Romans", "1Corinthians", "2Corinthians",
+    "Galatians", "Ephesians", "Philippians", "Colossians", "Thessalonians",
+    "2 Thessalonians", "Timothy", "2 Timothy", "Titus", "Philemon",
+    "Hebrews", "James", "1Peter", "2Peter", "1John", "2John",
+    "3John", "Jude", "Revelation"
+]
 
 api_url = "https://bible-api.com/"
 app = Flask(__name__)
@@ -116,26 +131,37 @@ def sermons(num):
     comments = db.session.query(Comment).filter_by(sermon_id=num).order_by(Comment.id.desc()).all()
 
     body = sermon.body
-    list = body.split('/')
-    print(list)
-    numbers = []
-    for i in range(0, len(list)):
-        if list[i] == '*':
-            numbers.append(i)
-    print(numbers)
-    for i in range(0, len(numbers), 2):
-        verse = list[numbers[i] + 1]
-        print(verse)
-        response = requests.get(api_url + verse)
-        data = response.json()
-        print(data)
-        list[numbers[i] + 1] = f'''
+    print(body)
+
+    words = re.findall(r'[^,.;>< ]+|[,.;<> ]', body)
+    print(words)
+    books = []
+
+    for i in range(len(words)):
+        if words[i].capitalize() in bible_books:
+            books.append(i)
+    print(books)
+    if books:
+        for num in books:
+            if ':' in list(words[num + 2]):
+                book = words[num].lower()
+                verse = words[num + 2]
+                if '-' in list(words[num + 2]):
+                    search = f"{book}+{verse}"
+                else:
+                    search = f"{book}{verse}"
+                print(search)
+                response = requests.get(api_url + search)
+                data = response.json()
+                print(data)
+                words[num] = f'''
                 <button type="button" data-popover class="btn" data-bs-toggle="popover" 
                 title="{data["text"]}" 
                 data-content="{verse}">
                 {data["reference"]}</button>'''
+                words[num + 2] = ""
 
-    body = '/'.join(list)
+        body = ''.join(words)
 
     base_url= 1
     if request.method == 'POST':
