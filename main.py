@@ -138,45 +138,39 @@ def sermons(num):
     comments = db.session.query(Comment).filter_by(sermon_id=num).order_by(Comment.id.desc()).all()
 
     body = sermon.body
-    print(body)
 
     words = re.findall(r'[^,.;>< ]+|[,.;<> ]', body)
-    print(words)
     books = []
 
     for i in range(len(words)):
         if words[i].lower() in bible_books:
             books.append(i)
-    print(books)
     if books:
-        for num in books:
-            if words[num].lower() in numbered_books:
+        for number in books:
+            if words[number].lower() in numbered_books:
                 try:
-                    state = int(words[num - 2])
-                    words[num] = f"{state}{words[num]}"
-                    words[num - 2] = ""
+                    state = int(words[number - 2])
+                    words[number] = f"{state}{words[number]}"
+                    words[number - 2] = ""
                 except:
                     pass
-            if ':' in list(words[num + 2]):
-                book = words[num].lower()
-                verse = words[num + 2]
-                if '-' in list(words[num + 2]):
+            if ':' in list(words[number + 2]):
+                book = words[number].lower()
+                verse = words[number + 2]
+                if '-' in list(words[number + 2]):
                     search = f"{book}+{verse}"
                 else:
                     search = f"{book}{verse}"
-                print(search)
                 response = requests.get(api_url + search)
                 data = response.json()
 
-                print(data)
-
                 if 'error' not in data:
-                    words[num] = f'''
+                    words[number] = f'''
                     <button type="button" data-popover class="btn" data-bs-toggle="popover" 
                     title="{data["text"]}" 
                     data-content="{verse}">
                     {data["reference"]}</button>'''
-                    words[num + 2] = ""
+                    words[number + 2] = ""
 
         body = ''.join(words)
 
@@ -188,7 +182,6 @@ def sermons(num):
         db.session.commit()
         redirect(url_for('sermons', num=1))
     length = len(sermons) + 1
-
     return render_template('sermon.html',body=body, sermon=sermon, sermons=sermons, guys=users, x = 1, num=int(num), comments=comments, len=length, not_saved=not_saved)
 
 @app.route("/new-sermon", methods=['POST','GET'])
@@ -246,22 +239,18 @@ def prayer(id):
         list_of_testimonies = [field.data for field in form.testimonies.entries if field.data]
         dynamic_fields = request.form.getlist('dynamic_fields')
         dynamic_field = request.form.getlist('dynamic_field')
-        print(dynamic_fields)
-        print(dynamic_field)
 
         for item in dynamic_fields:
             list_of_requests.append(item)
         for item in dynamic_field:
             list_of_testimonies.append(item)
         if len(list_of_requests) >= len(list_of_testimonies):
-            print('equal')
             for i in range(0,len(list_of_testimonies)):
                 first =Testimony( testimony=list_of_testimonies[i],
                            request=list_of_requests[i],
                            date= current_date.strftime('%d/%B/%Y'),
                            author=current_user
                            )
-                print('yes')
                 db.session.add(first)
                 db.session.commit()
             for i in range(len(list_of_testimonies),len(list_of_requests)):
@@ -270,7 +259,6 @@ def prayer(id):
                           date=current_date.strftime('%d/%m/%y'),
                           author=current_user
                           )
-                print('no')
                 db.session.add(second)
                 db.session.commit()
             return redirect(url_for('prayer', id=id))
@@ -303,8 +291,6 @@ def prayer(id):
     requests_list = [item for item in user_requests_testimonies if item.request]
     testimonies_list = [item.testimony for item in user_requests_testimonies if item.testimony]
     testimonies_list.reverse()
-
-    print(base_url)
     return render_template('prayer.html', form=form, guys=users, req=requests_list, tes=testimonies_list, x=1)
 
 @app.route('/login/<id>')
@@ -313,7 +299,6 @@ def login(id):
         logout_user()
     user = db.get_or_404(User, id)
     login_user(user)
-    print(current_user.is_authenticated)
     if base_url == 2:
         return redirect(url_for('prayer', id=id))
     elif base_url ==1:
@@ -350,16 +335,13 @@ def save(id):
 @app.route('/saved/<id>', methods=['POST','GET'])
 @login_required
 def unsave(id):
-    print(type(id))
     number = current_user.id
     user = db.get_or_404(User, number)
     sermon = user.sermons
     my_list = make_list(sermon)
-    print(my_list)
     my_list.remove(int(id))
     string_list = [str(x) for x in my_list]
     user.sermons = ','.join(string_list)
-    print(user.sermons)
     db.session.commit()
     return redirect(url_for('sermons', num=id))
 
@@ -381,7 +363,6 @@ def personal(id):
             saved.append(sermon)
             body = sermon.body
             p_list = body.split('<p>')
-            print(p_list)
             subtext.append(p_list[1])
 
     return render_template('personal.html', saved=saved, x=1, guys=users, subtext=subtext, len=length)
