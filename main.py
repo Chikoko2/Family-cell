@@ -162,15 +162,16 @@ def sermons(num):
                 else:
                     search = f"{book}{verse}"
                 response = requests.get(api_url + search)
-                data = response.json()
+                if response.status_code == 200:
+                    data = response.json()
 
-                if 'error' not in data:
-                    words[number] = f'''
-                    <button type="button" data-popover class="btn" data-bs-toggle="popover" 
-                    title="{data["text"]}" 
-                    data-content="{verse}">
-                    {data["reference"]}</button>'''
-                    words[number + 2] = ""
+                    if 'error' not in data:
+                        words[number] = f'''
+                        <button type="button" data-popover class="btn" data-bs-toggle="popover" 
+                        title="{data["text"]}" 
+                        data-content="{verse}">
+                        {data["reference"]}</button>'''
+                        words[number + 2] = ""
 
         body = ''.join(words)
 
